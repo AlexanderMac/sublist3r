@@ -35,10 +35,9 @@ else:
 try:
     import requests.packages.urllib3
     requests.packages.urllib3.disable_warnings()
-except:
+except Exception:
     pass
 
-# Check if we are running this on windows platform
 is_windows = sys.platform.startswith('win')
 
 # Console Colors
@@ -50,15 +49,14 @@ if is_windows:
     R = '\033[91m'  # red
     W = '\033[0m'   # white
     try:
-        import win_unicode_console , colorama
+        import win_unicode_console
+        import colorama
         win_unicode_console.enable()
         colorama.init()
-        #Now the unicode will work ^_^
-    except:
+        # Now the unicode will work ^_^
+    except Exception:
         print("[!] Error: Coloring libraries not installed, no coloring will be used [Check the readme]")
         G = Y = B = R = W = G = Y = B = R = W = ''
-
-
 else:
     G = '\033[92m'  # green
     Y = '\033[93m'  # yellow
@@ -91,7 +89,6 @@ def parser_error(errmsg):
 
 
 def parse_args():
-    # parse the arguments
     parser = argparse.ArgumentParser(epilog='\tExample: \r\npython ' + sys.argv[0] + " -d google.com")
     parser.error = parser_error
     parser._optionals.title = "OPTIONS"
@@ -107,7 +104,6 @@ def parse_args():
 
 
 def write_file(filename, subdomains):
-    # saving subdomains results to output file
     print("%s[-] Saving results to file: %s%s%s%s" % (Y, W, R, filename, W))
     with open(str(filename), 'wt') as f:
         for subdomain in subdomains:
@@ -245,8 +241,7 @@ class enumratorBase(object):
             if links == prev_links:
                 retries += 1
                 page_no = self.get_page(page_no)
-
-        # make another retry maybe it isn't the last page
+                # make another retry maybe it isn't the last page
                 if retries >= 3:
                     return self.subdomains
 
@@ -617,7 +612,7 @@ class DNSdumpster(enumratorBaseThreaded):
                     self.print_("%s%s: %s%s" % (R, self.engine_name, W, host))
                 is_valid = True
                 self.live_subdomains.append(host)
-        except:
+        except Exception:
             pass
         self.lock.release()
         return is_valid
@@ -709,7 +704,7 @@ class Virustotal(enumratorBaseThreaded):
         return self.subdomains
 
     def extract_domains(self, resp):
-        #resp is already parsed as json
+        # resp is already parsed as json
         try:
             for i in resp['data']:
                 if i['type'] == 'domain':
@@ -758,7 +753,7 @@ class ThreatCrowd(enumratorBaseThreaded):
                     if self.verbose:
                         self.print_("%s%s: %s%s" % (R, self.engine_name, W, subdomain))
                     self.subdomains.append(subdomain.strip())
-        except Exception as e:
+        except Exception:
             pass
 
 
@@ -803,14 +798,13 @@ class CrtSearch(enumratorBaseThreaded):
                         continue
 
                     if '@' in subdomain:
-                        subdomain = subdomain[subdomain.find('@')+1:]
+                        subdomain = subdomain[subdomain.find('@') + 1:]
 
                     if subdomain not in self.subdomains and subdomain != self.domain:
                         if self.verbose:
                             self.print_("%s%s: %s%s" % (R, self.engine_name, W, subdomain))
                         self.subdomains.append(subdomain.strip())
-        except Exception as e:
-            print(e)
+        except Exception:
             pass
 
 class PassiveDNS(enumratorBaseThreaded):
@@ -825,7 +819,7 @@ class PassiveDNS(enumratorBaseThreaded):
     def req(self, url):
         try:
             resp = self.session.get(url, headers=self.headers, timeout=self.timeout)
-        except Exception as e:
+        except Exception:
             resp = None
 
         return self.get_response(resp)
@@ -847,7 +841,7 @@ class PassiveDNS(enumratorBaseThreaded):
                     if self.verbose:
                         self.print_("%s%s: %s%s" % (R, self.engine_name, W, subdomain))
                     self.subdomains.append(subdomain.strip())
-        except Exception as e:
+        except Exception:
             pass
 
 
@@ -912,21 +906,21 @@ def main(domain, threads, savefile, ports, silent, verbose, enable_bruteforce, e
     if verbose and not silent:
         print(Y + "[-] verbosity is enabled, will show the subdomains results in realtime" + W)
 
-    supported_engines = {'baidu': BaiduEnum,
-                         'yahoo': YahooEnum,
-                         'google': GoogleEnum,
-                         'bing': BingEnum,
-                         'ask': AskEnum,
-                         'netcraft': NetcraftEnum,
-                         'dnsdumpster': DNSdumpster,
-                         'virustotal': Virustotal,
-                         'threatcrowd': ThreatCrowd,
-                         'ssl': CrtSearch,
-                         'passivedns': PassiveDNS
-                         }
+    supported_engines = {
+        'baidu': BaiduEnum,
+        'yahoo': YahooEnum,
+        'google': GoogleEnum,
+        'bing': BingEnum,
+        'ask': AskEnum,
+        'netcraft': NetcraftEnum,
+        'dnsdumpster': DNSdumpster,
+        'virustotal': Virustotal,
+        'threatcrowd': ThreatCrowd,
+        'ssl': CrtSearch,
+        'passivedns': PassiveDNS
+    }
 
     chosenEnums = []
-
     if engines is None:
         chosenEnums = [
             BaiduEnum, YahooEnum, GoogleEnum, BingEnum, AskEnum,
@@ -963,7 +957,6 @@ def main(domain, threads, savefile, ports, silent, verbose, enable_bruteforce, e
         bruteforce_list = subbrute.print_target(parsed_domain.netloc, record_type, subs, resolvers, process_count, output, json_output, search_list, verbose)
 
     subdomains = search_list.union(bruteforce_list)
-
     if subdomains:
         subdomains = sorted(subdomains, key=subdomain_sorting_key)
 
@@ -1000,7 +993,7 @@ def interactive():
     if args.no_color:
         no_color()
     banner()
-    res = main(domain, threads, savefile, ports, silent=False, verbose=verbose, enable_bruteforce=enable_bruteforce, engines=engines)
+    main(domain, threads, savefile, ports, silent=False, verbose=verbose, enable_bruteforce=enable_bruteforce, engines=engines)
 
 if __name__ == "__main__":
     interactive()

@@ -5,7 +5,7 @@ setup(
     version='1.0',
     python_requires='>=2.7',
     install_requires=['dnspython', 'requests', 'argparse; python_version==\'2.7\''],
-    packages=find_packages()+['.'],
+    packages=find_packages() + ['.'],
     include_package_data=True,
     url='https://github.com/aboul3la/Sublist3r',
     license='GPL-2.0',
@@ -19,18 +19,13 @@ setup(
         'License :: OSI Approved :: GNU General Public License v2',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Security',
     ],
     keywords='subdomain dns detection',
     entry_points={
         'console_scripts': [
             'sublist3r = sublist3r:interactive',
-        ],
-    },
+        ]
+    }
 )
