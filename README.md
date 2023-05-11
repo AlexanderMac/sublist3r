@@ -1,28 +1,31 @@
-## About Sublist3r 
+# Sublist3r
+
+### The changes with original repo:
+- Fix the VirusTotal API url and add possibility to send ApiKey.
+- Fix in resolver (use `resolve` instead of `query`).
 
 Sublist3r is a python tool designed to enumerate subdomains of websites using OSINT. It helps penetration testers and bug hunters collect and gather subdomains for the domain they are targeting. Sublist3r enumerates subdomains using many search engines such as Google, Yahoo, Bing, Baidu and Ask. Sublist3r also enumerates subdomains using Netcraft, Virustotal, ThreatCrowd, DNSdumpster and ReverseDNS.
 
 [subbrute](https://github.com/TheRook/subbrute) was integrated with Sublist3r to increase the possibility of finding more subdomains using bruteforce with an improved wordlist. The credit goes to TheRook who is the author of subbrute.
 
-## Screenshots
+### Screenshots
 
 ![Sublist3r](http://www.secgeek.net/images/Sublist3r.png "Sublist3r in action")
 
 
-## Installation
+### Installation
 
 ```
 git clone https://github.com/aboul3la/Sublist3r.git
 ```
 
-## Recommended Python Version:
+### Recommended Python Version:
 
-Sublist3r currently supports **Python 2** and **Python 3**.
+Sublist3r supports **Python 3**.
 
-* The recommended version for Python 2 is **2.7.x**
 * The recommended version for Python 3 is **3.4.x**
 
-## Dependencies:
+### Dependencies:
 
 Sublist3r depends on the `requests`, `dnspython` and `argparse` python modules.
 
@@ -30,77 +33,16 @@ These dependencies can be installed using the requirements file:
 
 - Installation on Windows:
 ```
-c:\python27\python.exe -m pip install -r requirements.txt
+python.exe -m pip install -r requirements.txt
 ```
 - Installation on Linux
 ```
 sudo pip install -r requirements.txt
 ```
 
-Alternatively, each module can be installed independently as shown below.
+Alternatively, each module can be installed independently.
 
-#### Requests Module (http://docs.python-requests.org/en/latest/)
-
-- Install for Windows:
-```
-c:\python27\python.exe -m pip install requests
-```
-
-- Install for Ubuntu/Debian:
-```
-sudo apt-get install python-requests
-```
-
-- Install for Centos/Redhat:
-```
-sudo yum install python-requests
-```
-
-- Install using pip on Linux:
-```
-sudo pip install requests
-```
-
-#### dnspython Module (http://www.dnspython.org/)
-
-- Install for Windows:
-```
-c:\python27\python.exe -m pip install dnspython
-```
-
-- Install for Ubuntu/Debian:
-```
-sudo apt-get install python-dnspython
-```
-
-- Install using pip:
-```
-sudo pip install dnspython
-```
-
-#### argparse Module
-
-- Install for Ubuntu/Debian:
-```
-sudo apt-get install python-argparse
-```
-
-- Install for Centos/Redhat:
-```
-sudo yum install python-argparse
-``` 
-
-- Install using pip:
-```
-sudo pip install argparse
-```
-
-**for coloring in windows install the following libraries**
-```
-c:\python27\python.exe -m pip install win_unicode_console colorama
-```
-
-## Usage
+### Usage
 
 Short Form    | Long Form     | Description
 ------------- | ------------- |-------------
@@ -140,7 +82,7 @@ Short Form    | Long Form     | Description
 ``python sublist3r.py -e google,yahoo,virustotal -d example.com``
 
 
-## Using Sublist3r as a module in your python scripts
+### Using Sublist3r as a module in your python scripts
 
 **Example**
 
@@ -165,19 +107,13 @@ import sublist3r
 subdomains = sublist3r.main('yahoo.com', 40, 'yahoo_subdomains.txt', ports= None, silent=False, verbose= False, enable_bruteforce= False, engines=None)
 ```
 
-## License
-
+### License
 Sublist3r is licensed under the GNU GPL license. take a look at the [LICENSE](https://github.com/aboul3la/Sublist3r/blob/master/LICENSE) for more information.
 
-
-## Credits
-
+### Credits
 * [TheRook](https://github.com/TheRook) - The bruteforce module was based on his script **subbrute**. 
 * [Bitquark](https://github.com/bitquark) - The Subbrute's wordlist was based on his research **dnspop**. 
 
-## Thanks
-
+### Thanks
 * Special Thanks to [Ibrahim Mosaad](https://twitter.com/ibrahim_mosaad) for his great contributions that helped in improving the tool.
 
-## Version
-**Current version is 1.0**
