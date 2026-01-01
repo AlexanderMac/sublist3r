@@ -1,6 +1,6 @@
 # Sublist3r
 
-WARNING ⚠️: This repo is not maintained anymore, use original [markedjs/marked](https://github.com/aboul3la/Sublist3r) instead.
+WARNING ⚠️: This repo is not maintained anymore, use original https://github.com/aboul3la/Sublist3r instead.
 
 ### The changes with original repo:
 - Fix the VirusTotal API url and add possibility to send ApiKey.
